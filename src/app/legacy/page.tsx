@@ -1,18 +1,25 @@
 'use client';
 
-import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import React, { useState } from 'react';
+import Link from 'next/link';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Users, 
   Store, 
   TrendingUp, 
-  Calendar, 
   Award, 
   Heart, 
   Leaf, 
   ShieldCheck, 
   Lightbulb,
-  Wheat
+  Wheat,
+  Home,
+  RefreshCcw,
+  Menu,
+  X,
+  MapPin,
+  Phone,
+  ArrowRight
 } from 'lucide-react';
 import { Playfair_Display, Plus_Jakarta_Sans } from 'next/font/google';
 
@@ -25,8 +32,8 @@ const TIMELINE = [
   {
     year: "2010",
     title: "Humble Beginnings",
-    desc: "Founded by Mr. Ketanbhai Thakkar and his parents, Mr. Krishnakant & Mrs. Manjulaben. A part-time venture selling mamra from a single room.",
-    icon: HomeIcon
+    desc: "Founded by Mr. Ketanbhai Thakkar and his parents. A part-time venture selling mamra from a single room.",
+    icon: Home
   },
   {
     year: "2012",
@@ -86,23 +93,126 @@ const STATS = [
   { label: "Daily Production", value: "1000kg" },
 ];
 
-// Helper Icons
-function HomeIcon({ className }: { className?: string }) {
-  return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>;
-}
-function RefreshCcw({ className }: { className?: string }) {
-    return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 16h5v5"/></svg>;
-}
+// --- Shared Components (Mobile Optimized) ---
 
-// --- Components ---
+const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const links = [
+    { name: 'Our Products', href: '/products' },
+    { name: 'Legacy', href: '/legacy' },
+    { name: 'Recipes', href: '/recipes' },
+    { name: 'Contact', href: '/contact' },
+  ];
 
-const Navbar = () => (
-  <nav className="fixed top-0 w-full z-50 bg-[#FFFBEB]/90 backdrop-blur-md border-b border-orange-100 px-6 py-4">
-    <div className="max-w-7xl mx-auto flex justify-between items-center">
-      <span className={`${serif.className} text-xl font-bold text-[#4A3B32]`}>Heerak Food</span>
-      <a href="/" className="text-sm font-semibold text-gray-500 hover:text-orange-600">Back to Home</a>
-    </div>
-  </nav>
+  return (
+    <>
+      <nav className={`fixed top-4 left-0 right-0 z-50 px-3 md:px-8`}>
+        <motion.div 
+          initial={{ y: -20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          className="max-w-6xl mx-auto bg-white/90 backdrop-blur-md rounded-full shadow-lg border border-orange-100 p-2 md:p-3 flex justify-between items-center relative z-50"
+        >
+          <Link href="/" className="flex items-center gap-2 pl-2 md:pl-4 group">
+            <div className="w-8 h-8 md:w-12 md:h-12 rounded-xl flex items-center justify-center overflow-hidden shadow-sm group-hover:scale-105 transition-transform p-0.5">
+               <img src="/images/logo.webp" alt="Heerak Food Logo" className="w-full h-full object-contain" />
+            </div>
+            <span className={`${serif.className} text-lg md:text-2xl font-bold text-gray-800 tracking-tight`}>
+              Heerak Food
+            </span>
+          </Link>
+
+          <div className="hidden md:flex items-center gap-8">
+            <div className={`flex gap-6 ${sans.className} text-sm font-semibold text-gray-600`}>
+              {links.map((link) => (
+                <Link key={link.name} href={link.href} className="hover:text-orange-600 transition-colors relative group">
+                  {link.name}
+                  <span className="absolute inset-x-0 bottom-0 h-0.5 bg-orange-500 origin-left scale-x-0 transition-transform group-hover:scale-x-100" />
+                </Link>
+              ))}
+            </div>
+            <Link href="/contact">
+              <button className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2.5 rounded-full font-medium text-sm transition-transform hover:scale-105 shadow-md shadow-orange-200 relative overflow-hidden group">
+                <span className="relative z-10">Order Wholesale</span>
+                <div className="absolute inset-0 h-full w-full scale-0 rounded-full transition-all duration-300 group-hover:scale-100 group-hover:bg-white/20"></div>
+              </button>
+            </Link>
+          </div>
+
+          <button onClick={() => setIsOpen(!isOpen)} className="md:hidden bg-orange-500 text-white p-2 rounded-full hover:bg-orange-600 transition-colors shadow-md mr-1">
+            {isOpen ? <X size={18} /> : <Menu size={18} />}
+          </button>
+        </motion.div>
+      </nav>
+
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="fixed inset-0 z-40 bg-[#FFFBEB] pt-28 px-6 md:hidden"
+          >
+            <div className="flex flex-col gap-6 text-center">
+              {links.map((link) => (
+                <Link key={link.name} href={link.href} onClick={() => setIsOpen(false)} className={`${serif.className} text-2xl font-bold text-[#4A3B32] hover:text-orange-600`}>
+                  {link.name}
+                </Link>
+              ))}
+              <hr className="border-orange-200 w-1/2 mx-auto" />
+              <Link href="/contact" onClick={() => setIsOpen(false)}>
+                <button className="bg-orange-500 text-white px-8 py-4 rounded-full font-bold text-lg shadow-xl w-full">
+                  Order Wholesale
+                </button>
+              </Link>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+};
+
+const Footer = () => (
+  <footer className="bg-[#4A3B32] text-orange-50 pt-24 pb-10 rounded-t-[3rem] md:rounded-t-[4rem] mt-10 relative z-10 overflow-hidden">
+      <div className="max-w-6xl mx-auto px-6">
+        <div className="grid md:grid-cols-4 gap-12 mb-16">
+          <div className="col-span-2">
+            <div className="flex items-center gap-3 mb-6">
+                <div className="w-14 h-14 bg-white/5 rounded-lg flex items-center justify-center overflow-hidden p-1">
+                    <img src="/images/logo.webp" alt="Heerak Food Logo" className="w-full h-full object-contain" />
+                </div>
+                <h3 className={`${serif.className} text-3xl font-bold text-white`}>Heerak Food</h3>
+            </div>
+            <p className="text-orange-100/70 max-w-md leading-relaxed text-lg">
+              Bringing the authentic taste of Gujarat to the world. We are committed to delivering the freshest puffed rice and snacks with zero compromise on quality.
+            </p>
+          </div>
+          <div>
+            <h4 className="font-bold text-white mb-6 text-lg">Quick Links</h4>
+            <ul className="space-y-4 text-orange-100/70">
+              {['Our Story', 'Products', 'Wholesale Inquiry', 'Contact Us'].map((item, idx) => (
+                 <li key={idx}><a href="#" className="hover:text-orange-400 transition-colors inline-block hover:translate-x-2 duration-300">{item}</a></li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-bold text-white mb-6 text-lg">Contact</h4>
+            <ul className="space-y-4 text-orange-100/70 font-medium w-full">
+              <li className="flex items-start gap-3"><MapPin className="text-orange-500 shrink-0" size={20} /> Ahmedabad, Gujarat</li>
+              <li className="flex items-center gap-3 hover:text-orange-400 transition-colors"><Phone className="text-orange-500 shrink-0" size={20} /> <a href="tel:+919727724404">+91 97277 24404</a></li>
+              <li className="flex items-center gap-3 hover:text-orange-400 transition-colors w-full">
+                <ArrowRight className="text-orange-500 shrink-0" size={20} /> 
+                <a href="mailto:heerakfood.business@gmail.com" className="break-all">heerakfood.business@gmail.com</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div className="border-t border-orange-500/20 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-orange-100/50 text-center md:text-left">
+          <p className="mb-2 md:mb-0">© 2025 Heerak Food. All rights reserved.</p>
+          <p>Designed with ❤️ in India.</p>
+        </div>
+      </div>
+    </footer>
 );
 
 export default function LegacyPage() {
@@ -133,27 +243,35 @@ export default function LegacyPage() {
           </p>
         </div>
 
-        {/* Hero Image Placeholder - Founders */}
+        {/* Hero Visual - Custom Foundation Card */}
         <motion.div 
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="mt-16 max-w-5xl mx-auto aspect-[16/7] bg-[#4A3B32] rounded-[3rem] overflow-hidden relative shadow-2xl"
+          // Using min-h to ensure it doesn't get squashed on mobile
+          className="mt-16 max-w-4xl mx-auto w-full min-h-[320px] md:aspect-[2/1] rounded-[2.5rem] relative shadow-2xl bg-[#3E3228] flex flex-col items-center justify-center p-8 overflow-hidden"
         >
-          {/* Sepia Overlay for Legacy Feel */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#4A3B32]/80 to-transparent z-10"></div>
-          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/dust.png')] opacity-30 z-20"></div>
+          {/* Subtle Grain Texture Overlay */}
+          <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cardboard.png')] pointer-events-none"></div>
+
+          {/* Icons Row */}
+          <div className="flex items-center gap-6 mb-8 relative z-10">
+             <Home className="w-12 h-12 md:w-16 md:h-16 text-[#D4B08C]" strokeWidth={1.5} />
+             <ArrowRight className="w-6 h-6 md:w-8 md:h-8 text-[#8B5A2B]" strokeWidth={2} />
+             <Wheat className="w-12 h-12 md:w-16 md:h-16 text-[#E6C200]" strokeWidth={1.5} />
+          </div>
           
-          <div className="absolute bottom-0 left-0 w-full p-8 md:p-12 z-30 text-white">
-            <h3 className={`${serif.className} text-3xl font-bold mb-2`}>The Foundation</h3>
-            <p className="opacity-90 max-w-lg">
-              Started by Mr. Ketanbhai Thakkar and his parents, Mr. Krishnakant & Mrs. Manjulaben Thakkar.
-            </p>
+          {/* Text Content */}
+          <div className="text-center relative z-10">
+            <h3 className={`${serif.className} text-3xl md:text-5xl font-bold text-white mb-3 leading-tight`}>
+              "Great things start small."
+            </h3>
+            <p className="text-[#8E8075] font-medium text-base md:text-lg tracking-wide">The First Room, 2010</p>
           </div>
 
-          {/* Actual Image Placeholder */}
-          <div className="w-full h-full bg-gray-300 flex items-center justify-center text-gray-500 font-bold text-xl">
-             
+          {/* Footer Label */}
+          <div className="absolute bottom-6 left-0 w-full text-center md:text-left md:bottom-10 md:left-12 text-[#6D5F55] text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase z-10">
+             Founders: Mr. Ketanbhai & Family
           </div>
         </motion.div>
       </section>
@@ -201,9 +319,6 @@ export default function LegacyPage() {
                 The foundational principles that drive every decision we make at Heerak Food.
               </p>
             </div>
-            <button className="bg-[#4A3B32] text-white px-6 py-3 rounded-full font-semibold hover:bg-orange-600 transition-colors">
-              Read More
-            </button>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -234,6 +349,8 @@ export default function LegacyPage() {
           </p>
         </div>
       </section>
+
+      <Footer />
     </main>
   );
 }
