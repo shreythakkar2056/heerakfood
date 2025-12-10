@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Search, 
@@ -12,7 +13,10 @@ import {
   ArrowRight,
   Utensils,
   CheckCircle2,
-  Timer
+  Timer,
+  Menu,
+  MapPin,
+  Phone
 } from 'lucide-react';
 import { Playfair_Display, Plus_Jakarta_Sans } from 'next/font/google';
 
@@ -21,12 +25,14 @@ const serif = Playfair_Display({ subsets: ['latin'], weight: ['600', '700', '800
 const sans = Plus_Jakarta_Sans({ subsets: ['latin'], weight: ['400', '500', '600', '700'] });
 
 // --- Mock Data: Recipes ---
+// Added 'productImage' field to link recipes to your packaging
 const RECIPES = [
   {
     id: 1,
     title: "Mumbai Style Bhel Puri",
     category: "Mamra",
     productUsed: "Kolhapuri Mamra",
+    productImage: "/images/Heerak Kolhapuri Mamra.webp",
     time: "15 min",
     servings: "2",
     calories: "180 kcal",
@@ -52,7 +58,8 @@ const RECIPES = [
     id: 2,
     title: "Kanda Batata Poha",
     category: "Poha",
-    productUsed: "Jada Poha (Thick)",
+    productUsed: "Heerak Poha",
+    productImage: "/images/Heerak Poha.webp",
     time: "20 min",
     servings: "3",
     calories: "250 kcal",
@@ -79,6 +86,7 @@ const RECIPES = [
     title: "Traditional Gud Papdi",
     category: "Jaggery",
     productUsed: "Kolhapuri Jaggery",
+    productImage: "/images/Jaggery.webp",
     time: "30 min",
     servings: "6",
     calories: "320 kcal",
@@ -104,6 +112,7 @@ const RECIPES = [
     title: "Healthy Mamra Chivda",
     category: "Mamra",
     productUsed: "Basmati Mamra",
+    productImage: "/images/Heerak Basmati Mamra.webp",
     time: "10 min",
     servings: "4",
     calories: "120 kcal",
@@ -128,7 +137,8 @@ const RECIPES = [
     id: 5,
     title: "Jaggery Masala Tea",
     category: "Jaggery",
-    productUsed: "Jaggery Powder",
+    productUsed: "Desi Jaggery",
+    productImage: "/images/Organic Jaggery.webp",
     time: "10 min",
     servings: "2",
     calories: "60 kcal",
@@ -137,13 +147,13 @@ const RECIPES = [
     ingredients: [
       "2 cups Water + Milk",
       "2 tsp Tea powder",
-      "1 tbsp Heerak Jaggery Powder",
+      "1 tbsp Heerak Jaggery",
       "Ginger & Cardamom"
     ],
     steps: [
       "Boil water with ginger and tea powder.",
       "Add milk and bring to a boil.",
-      "Turn off the heat and stir in the Jaggery Powder (prevents curdling).",
+      "Turn off the heat and stir in the Jaggery (prevents curdling).",
       "Strain and serve hot."
     ]
   },
@@ -151,14 +161,15 @@ const RECIPES = [
     id: 6,
     title: "Roasted Poha Chivda",
     category: "Poha",
-    productUsed: "Patla Poha (Thin)",
+    productUsed: "Nylon Poha",
+    productImage: "/images/Heerak Naylon Poha 500g.webp",
     time: "25 min",
     servings: "5",
     calories: "150 kcal",
     difficulty: "Medium",
     imageColor: "from-gray-100 to-white",
     ingredients: [
-      "3 cups Heerak Patla Poha",
+      "3 cups Heerak Nylon Poha",
       "Cashews & Raisins",
       "Green Chilies",
       "Sugar & Salt"
@@ -173,15 +184,126 @@ const RECIPES = [
   }
 ];
 
-// --- Components ---
+// --- Shared Components (Responsive) ---
 
-const Navbar = () => (
-  <nav className="fixed top-0 w-full z-40 bg-[#FFFBEB]/90 backdrop-blur-md border-b border-orange-100 px-6 py-4">
-    <div className="max-w-7xl mx-auto flex justify-between items-center">
-      <span className={`${serif.className} text-xl font-bold text-[#4A3B32]`}>Heerak Food</span>
-      <a href="/" className="text-sm font-semibold text-gray-500 hover:text-orange-600">Back to Home</a>
-    </div>
-  </nav>
+const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const links = [
+    { name: 'Our Products', href: '/products' },
+    { name: 'Legacy', href: '/legacy' },
+    { name: 'Recipes', href: '/recipes' },
+    { name: 'Contact', href: '/contact' },
+  ];
+
+  return (
+    <>
+      <nav className={`fixed top-4 left-0 right-0 z-50 px-3 md:px-8`}>
+        <motion.div 
+          initial={{ y: -20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          className="max-w-6xl mx-auto bg-white/90 backdrop-blur-md rounded-full shadow-lg border border-orange-100 p-2 md:p-3 flex justify-between items-center relative z-50"
+        >
+          <Link href="/" className="flex items-center gap-2 pl-2 md:pl-4 group">
+            <div className="w-8 h-8 md:w-12 md:h-12 rounded-xl flex items-center justify-center overflow-hidden shadow-sm group-hover:scale-105 transition-transform p-0.5">
+               <img src="/images/logo.webp" alt="Heerak Food Logo" className="w-full h-full object-contain" />
+            </div>
+            <span className={`${serif.className} text-lg md:text-2xl font-bold text-gray-800 tracking-tight`}>
+              Heerak Food
+            </span>
+          </Link>
+
+          <div className="hidden md:flex items-center gap-8">
+            <div className={`flex gap-6 ${sans.className} text-sm font-semibold text-gray-600`}>
+              {links.map((link) => (
+                <Link key={link.name} href={link.href} className="hover:text-orange-600 transition-colors relative group">
+                  {link.name}
+                  <span className="absolute inset-x-0 bottom-0 h-0.5 bg-orange-500 origin-left scale-x-0 transition-transform group-hover:scale-x-100" />
+                </Link>
+              ))}
+            </div>
+            <Link href="/contact">
+              <button className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2.5 rounded-full font-medium text-sm transition-transform hover:scale-105 shadow-md shadow-orange-200 relative overflow-hidden group">
+                <span className="relative z-10">Order Wholesale</span>
+                <div className="absolute inset-0 h-full w-full scale-0 rounded-full transition-all duration-300 group-hover:scale-100 group-hover:bg-white/20"></div>
+              </button>
+            </Link>
+          </div>
+
+          <button onClick={() => setIsOpen(!isOpen)} className="md:hidden bg-orange-500 text-white p-2 rounded-full hover:bg-orange-600 transition-colors shadow-md mr-1">
+            {isOpen ? <X size={18} /> : <Menu size={18} />}
+          </button>
+        </motion.div>
+      </nav>
+
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="fixed inset-0 z-40 bg-[#FFFBEB] pt-28 px-6 md:hidden"
+          >
+            <div className="flex flex-col gap-6 text-center">
+              {links.map((link) => (
+                <Link key={link.name} href={link.href} onClick={() => setIsOpen(false)} className={`${serif.className} text-2xl font-bold text-[#4A3B32] hover:text-orange-600`}>
+                  {link.name}
+                </Link>
+              ))}
+              <hr className="border-orange-200 w-1/2 mx-auto" />
+              <Link href="/contact" onClick={() => setIsOpen(false)}>
+                <button className="bg-orange-500 text-white px-8 py-4 rounded-full font-bold text-lg shadow-xl w-full">
+                  Order Wholesale
+                </button>
+              </Link>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+};
+
+const Footer = () => (
+  <footer className="bg-[#4A3B32] text-orange-50 pt-24 pb-10 rounded-t-[3rem] md:rounded-t-[4rem] mt-10 relative z-10 overflow-hidden">
+      <div className="max-w-6xl mx-auto px-6">
+        <div className="grid md:grid-cols-4 gap-12 mb-16">
+          <div className="col-span-2">
+            <div className="flex items-center gap-3 mb-6">
+                <div className="w-14 h-14 bg-white/5 rounded-lg flex items-center justify-center overflow-hidden p-1">
+                    <img src="/images/logo.webp" alt="Heerak Food Logo" className="w-full h-full object-contain" />
+                </div>
+                <h3 className={`${serif.className} text-3xl font-bold text-white`}>Heerak Food</h3>
+            </div>
+            <p className="text-orange-100/70 max-w-md leading-relaxed text-lg">
+              Bringing the authentic taste of Gujarat to the world. We are committed to delivering the freshest puffed rice and snacks with zero compromise on quality.
+            </p>
+          </div>
+          <div>
+            <h4 className="font-bold text-white mb-6 text-lg">Quick Links</h4>
+            <ul className="space-y-4 text-orange-100/70">
+              {['Our Story', 'Products', 'Wholesale Inquiry', 'Contact Us'].map((item, idx) => (
+                 <li key={idx}><a href="#" className="hover:text-orange-400 transition-colors inline-block hover:translate-x-2 duration-300">{item}</a></li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-bold text-white mb-6 text-lg">Contact</h4>
+            <ul className="space-y-4 text-orange-100/70 font-medium w-full">
+              <li className="flex items-start gap-3"><MapPin className="text-orange-500 shrink-0" size={20} /> Ahmedabad, Gujarat</li>
+              <li className="flex items-center gap-3 hover:text-orange-400 transition-colors"><Phone className="text-orange-500 shrink-0" size={20} /> <a href="tel:+919727724404">+91 97277 24404</a></li>
+              <li className="flex items-center gap-3 hover:text-orange-400 transition-colors w-full">
+                <ArrowRight className="text-orange-500 shrink-0" size={20} /> 
+                <a href="mailto:heerakfood@gmail.com" className="break-all">heerakfood@gmail.com</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div className="border-t border-orange-500/20 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-orange-100/50 text-center md:text-left">
+          <p className="mb-2 md:mb-0">© 2025 Heerak Food. All rights reserved.</p>
+          <p>Designed with ❤️ in India.</p>
+        </div>
+      </div>
+    </footer>
 );
 
 // --- Main Recipe Modal Component ---
@@ -193,7 +315,7 @@ const RecipeModal = ({ recipe, onClose }: { recipe: any; onClose: () => void }) 
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm"
+      className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
       onClick={onClose}
     >
       <motion.div 
@@ -201,16 +323,14 @@ const RecipeModal = ({ recipe, onClose }: { recipe: any; onClose: () => void }) 
         animate={{ scale: 1, y: 0 }}
         exit={{ scale: 0.9, y: 20 }}
         className="bg-white w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-[2rem] shadow-2xl relative flex flex-col md:flex-row overflow-hidden"
-        onClick={(e) => e.stopPropagation()} // Prevent close on modal click
+        onClick={(e) => e.stopPropagation()} 
       >
-        {/* Close Button */}
         <button onClick={onClose} className="absolute top-4 right-4 z-10 bg-white/50 hover:bg-white p-2 rounded-full backdrop-blur-md transition-colors">
           <X size={24} className="text-gray-600" />
         </button>
 
         {/* Left: Image & Quick Stats */}
-        <div className={`md:w-2/5 bg-gradient-to-br ${recipe.imageColor} p-10 flex flex-col justify-between relative`}>
-           {/* Pattern */}
+        <div className={`md:w-2/5 bg-gradient-to-br ${recipe.imageColor} p-8 flex flex-col justify-between relative`}>
            <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/food.png')]"></div>
            
            <div className="relative z-10">
@@ -219,6 +339,11 @@ const RecipeModal = ({ recipe, onClose }: { recipe: any; onClose: () => void }) 
              </span>
              <h2 className={`${serif.className} text-3xl md:text-4xl font-bold text-[#4A3B32] mb-2`}>{recipe.title}</h2>
              <p className="text-[#4A3B32]/70 font-medium italic">Uses: {recipe.productUsed}</p>
+             
+             {/* PRODUCT IMAGE IN MODAL */}
+             <div className="mt-6 flex justify-center">
+                <img src={recipe.productImage} alt={recipe.productUsed} className="w-32 h-32 object-contain drop-shadow-xl" />
+             </div>
            </div>
 
            <div className="grid grid-cols-2 gap-4 mt-8 relative z-10">
@@ -248,7 +373,6 @@ const RecipeModal = ({ recipe, onClose }: { recipe: any; onClose: () => void }) 
         {/* Right: Content */}
         <div className="md:w-3/5 p-8 md:p-10 bg-white">
           
-          {/* Ingredients */}
           <div className="mb-8">
             <h3 className={`${serif.className} text-2xl font-bold text-[#4A3B32] mb-4 flex items-center gap-2`}>
               <span className="bg-orange-100 p-1.5 rounded-lg text-orange-600"><Utensils size={20} /></span> 
@@ -264,7 +388,6 @@ const RecipeModal = ({ recipe, onClose }: { recipe: any; onClose: () => void }) 
             </ul>
           </div>
 
-          {/* Instructions */}
           <div>
             <h3 className={`${serif.className} text-2xl font-bold text-[#4A3B32] mb-4 flex items-center gap-2`}>
               <span className="bg-green-100 p-1.5 rounded-lg text-green-600"><Timer size={20} /></span> 
@@ -305,7 +428,7 @@ export default function RecipesPage() {
   }, [activeCategory, searchQuery]);
 
   return (
-    <main className={`min-h-screen ${sans.className} bg-[#FFFBEB]`}>
+    <main className={`min-h-screen ${sans.className} bg-[#FFFBEB] overflow-x-hidden`}>
       <Navbar />
 
       {/* Hero Section */}
@@ -330,7 +453,7 @@ export default function RecipesPage() {
       </section>
 
       {/* Filter & Search Bar */}
-      <section className="px-6 sticky top-20 z-30 pointer-events-none mb-12">
+      <section className="px-6 sticky top-24 z-30 pointer-events-none mb-12">
         <div className="max-w-6xl mx-auto pointer-events-auto">
           <div className="bg-white/80 backdrop-blur-xl rounded-2xl shadow-lg border border-orange-100 p-2 md:p-3 flex flex-col md:flex-row items-center justify-between gap-4">
             
@@ -385,19 +508,26 @@ export default function RecipesPage() {
               >
                 {/* Card Image Area */}
                 <div className={`h-56 bg-gradient-to-br ${recipe.imageColor} relative flex items-center justify-center p-6`}>
-                   {/* Decorative Icon */}
-                   <div className="w-20 h-20 bg-white/30 backdrop-blur-md rounded-full flex items-center justify-center text-white/60 group-hover:scale-110 transition-transform duration-500">
-                      <Utensils size={32} />
+                   
+                   {/* Product Image Displayed in Card */}
+                   <div className="relative z-10 w-full h-full flex items-center justify-center">
+                      {/* White glow behind pack */}
+                      <div className="absolute inset-0 bg-white/30 blur-2xl scale-75 rounded-full"></div>
+                      <img 
+                        src={recipe.productImage} 
+                        alt={recipe.productUsed} 
+                        className="h-full object-contain drop-shadow-xl group-hover:scale-110 transition-transform duration-500" 
+                      />
                    </div>
                    
                    {/* Product Tag */}
-                   <div className="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider text-[#4A3B32] shadow-sm flex items-center gap-1">
+                   <div className="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider text-[#4A3B32] shadow-sm flex items-center gap-1 z-20">
                       <div className="w-1.5 h-1.5 rounded-full bg-orange-500" />
                       {recipe.category}
                    </div>
                    
                    {/* Time Tag */}
-                   <div className="absolute bottom-4 right-4 bg-black/60 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-white flex items-center gap-1">
+                   <div className="absolute bottom-4 right-4 bg-black/60 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-white flex items-center gap-1 z-20">
                       <Clock size={12} /> {recipe.time}
                    </div>
                 </div>
@@ -437,7 +567,7 @@ export default function RecipesPage() {
       </section>
 
       {/* Footer CTA */}
-      <section className="bg-[#4A3B32] py-20 px-6 text-center rounded-t-[3rem]">
+      {/* <section className="bg-[#4A3B32] py-20 px-6 text-center rounded-t-[3rem]">
         <h2 className={`${serif.className} text-3xl font-bold text-white mb-6`}>
           Have a unique recipe?
         </h2>
@@ -447,7 +577,7 @@ export default function RecipesPage() {
         <button className="bg-white text-[#4A3B32] px-8 py-3 rounded-full font-bold hover:bg-orange-50 transition-colors">
           Submit Recipe
         </button>
-      </section>
+      </section> */}
 
       {/* Render Modal */}
       <AnimatePresence>
@@ -459,6 +589,7 @@ export default function RecipesPage() {
         )}
       </AnimatePresence>
 
+      <Footer />
     </main>
   );
 }

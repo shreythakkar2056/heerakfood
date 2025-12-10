@@ -302,7 +302,7 @@ const Footer = () => (
               <li className="flex items-center gap-3 hover:text-orange-400 transition-colors w-full">
                 <ArrowRight className="text-orange-500 shrink-0" size={20} /> 
                 {/* Fixed Email Clipping: Added break-all */}
-                <a href="mailto:heerakfood.business@gmail.com" className="break-all">heerakfood.business@gmail.com</a>
+                <a href="mailto:heerakfood@gmail.com" className="break-all">heerakfood@gmail.com</a>
               </li>
             </ul>
           </div>

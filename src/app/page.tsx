@@ -318,21 +318,21 @@ const ProductShowcase = () => {
     { 
       name: "Premium Mamra", 
       desc: "Light, crunchy puffed rice.", 
-      image: "/images/mamra bowl.png", // Replace with actual product image
+      image: "/images/Heerak Kolhapuri Mamra.webp", // Replace with actual product image
       color: "bg-blue-50",
       accent: "blue" 
     },
     { 
       name: "Various Poha", 
       desc: "Light & healthy Breakfast.", 
-      image: "/images/mamra bowl.png", // Replace with Poha Image e.g. "/images/poha.png"
+      image: "/images/Heerak Poha.webp", // Replace with Poha Image e.g. "/images/poha.png"
       color: "bg-orange-50",
       accent: "orange"
     },
     { 
       name: "Pure Jaggery", 
       desc: "Natural sweetener with minerals.", 
-      image: "/images/mamra bowl.png", // Replace with Jaggery Image e.g. "/images/jaggery.png"
+      image: "/images/Jaggery.webp", // Replace with Jaggery Image e.g. "/images/jaggery.png"
       color: "bg-yellow-50",
       accent: "yellow"
     },
@@ -508,7 +508,7 @@ const Footer = () => {
               </li>
               <li className="flex items-center gap-3 hover:text-orange-400 transition-colors">
                  <ArrowRight className="text-orange-500 shrink-0" size={20} />
-                <a href="mailto:heerakfood.business@gmail.com">heerakfood.business@gmail.com</a>
+                <a href="mailto:heerakfood@gmail.com"  className="break-all">heerakfood@gmail.com</a>
               </li>
             </ul>
           </div>

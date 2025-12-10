@@ -202,7 +202,7 @@ const Footer = () => (
               <li className="flex items-center gap-3 hover:text-orange-400 transition-colors"><Phone className="text-orange-500 shrink-0" size={20} /> <a href="tel:+919727724404">+91 97277 24404</a></li>
               <li className="flex items-center gap-3 hover:text-orange-400 transition-colors w-full">
                 <ArrowRight className="text-orange-500 shrink-0" size={20} /> 
-                <a href="mailto:heerakfood.business@gmail.com" className="break-all">heerakfood.business@gmail.com</a>
+                <a href="mailto:heerakfood@gmail.com" className="break-all">heerakfood@gmail.com</a>
               </li>
             </ul>
           </div>
@@ -258,7 +258,10 @@ export default function LegacyPage() {
           <div className="flex items-center gap-6 mb-8 relative z-10">
              <Home className="w-12 h-12 md:w-16 md:h-16 text-[#D4B08C]" strokeWidth={1.5} />
              <ArrowRight className="w-6 h-6 md:w-8 md:h-8 text-[#8B5A2B]" strokeWidth={2} />
-             <Wheat className="w-12 h-12 md:w-16 md:h-16 text-[#E6C200]" strokeWidth={1.5} />
+             {/* <Wheat className="w-12 h-12 md:w-16 md:h-16 text-[#E6C200]" strokeWidth={1.5} /> */}
+             <div className="w-16 h-16 md:w-24 md:h-24 mx-auto mb-6 rounded-xl overflow-hidden shadow-lg">
+            <img src="/images/logo.webp" alt="Heerak Food Logo" className="w-full h-full object-contain" />
+          </div>
           </div>
           
           {/* Text Content */}
@@ -340,7 +343,9 @@ export default function LegacyPage() {
       {/* Footer Quote */}
       <section className="py-20 px-6 bg-[#4A3B32] text-center">
         <div className="max-w-3xl mx-auto">
-          <Wheat className="w-12 h-12 text-orange-400 mx-auto mb-6" />
+          <div className="w-16 h-16 md:w-24 md:h-24 mx-auto mb-6 rounded-xl overflow-hidden shadow-lg">
+            <img src="/images/logo.webp" alt="Heerak Food Logo" className="w-full h-full object-contain" />
+          </div>
           <h2 className={`${serif.className} text-2xl md:text-4xl font-bold text-white mb-8 leading-relaxed`}>
             "Heerak stands as a symbol of innovation and quality, aspiring to expand nationwide and continue serving loyal customers."
           </h2>
