@@ -1,15 +1,15 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
-// PASTE YOUR KEYS FROM FIREBASE CONSOLE HERE
+// Firebase config loaded from environment variables
 const firebaseConfig = {
-  apiKey: "AIzaSyAVM5ucCZArbCTRPyBm4smmRLlLOyUYR5g",
-  authDomain: "heerak-food.firebaseapp.com",
-  projectId: "heerak-food",
-  storageBucket: "heerak-food.firebasestorage.app",
-  messagingSenderId: "687403971294",
-  appId: "1:687403971294:web:af7c172e07af60f347884f"
-};``
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+};
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
