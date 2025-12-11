@@ -434,7 +434,7 @@ const FeaturesSection = () => {
               className="relative bg-white p-3 rounded-[2.5rem] shadow-[0_20px_50px_-20px_rgba(0,0,0,0.2)] border-4 border-white"
             >
               {/* FIXED HEIGHT: h-[350px] on mobile, h-[600px] on desktop */}
-              <div className="bg-gray-100 rounded-[2rem] h-[350px] md:h-[600px] w-full flex items-center justify-center bg-[url('/images/heerak%20sathi%20mamra.webp')] bg-cover bg-center relative overflow-hidden group">
+              <div className="bg-gray-100 rounded-[2rem] h-[350px] md:h-[600px] w-full flex items-center justify-center bg-[url('/images/heerak sathi mamra.webp')] bg-cover bg-center relative overflow-hidden group">
                 <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500"></div>
                  <div className="text-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 absolute inset-0 flex flex-col items-center justify-center bg-black/30 backdrop-blur-sm text-white p-6">
                     <UtensilsCrossed size={64} className="mx-auto mb-4" />
