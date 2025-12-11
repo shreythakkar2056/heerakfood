@@ -106,6 +106,7 @@ const Navbar = () => {
     { name: 'Legacy', href: '/legacy' },
     { name: 'Recipes', href: '/recipes' },
     { name: 'Contact', href: '/contact' },
+    { name: 'Feedback', href: '/contact' },
   ];
 
   return (
@@ -435,7 +436,7 @@ const FeaturesSection = () => {
               className="relative bg-white p-3 rounded-[2.5rem] shadow-[0_20px_50px_-20px_rgba(0,0,0,0.2)] border-4 border-white"
             >
               {/* FIXED HEIGHT: h-[350px] on mobile, h-[600px] on desktop */}
-              <div className="bg-gray-100 rounded-[2rem] h-[350px] md:h-[600px] w-full flex items-center justify-center bg-[url('/images/heerak sathi mamra.webp')] bg-cover bg-center relative overflow-hidden group">
+              <div className="bg-gray-100 rounded-[2rem] h-[350px] md:h-[600px] w-full flex items-center justify-center bg-[url('/images/Heerak-Sathi-Mamra.webp')] bg-cover bg-center relative overflow-hidden group">
                 <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500"></div>
                  <div className="text-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 absolute inset-0 flex flex-col items-center justify-center bg-black/30 backdrop-blur-sm text-white p-6">
                     <UtensilsCrossed size={64} className="mx-auto mb-4" />
@@ -484,7 +485,7 @@ const Footer = () => {
           <div>
             <h4 className="font-bold text-white mb-6 text-lg">Quick Links</h4>
             <ul className="space-y-4 text-orange-100/70">
-              {['Our Story', 'Products', 'Wholesale Inquiry', 'Contact Us'].map((item, idx) => {
+              {['Our Story', 'Products', 'Wholesale Inquiry', 'Contact Us','Feedback'].map((item, idx) => {
                   const href = item === 'Our Story' ? '/legacy' : item === 'Products' ? '/products' : '/contact';
                   return (
                     <li key={idx}>
@@ -517,8 +518,18 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-orange-500/20 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-orange-100/50 text-center md:text-left">
-          <p className="mb-2 md:mb-0">© 2025 Heerak Food. All rights reserved.</p>
-          <p>Designed with ❤️ in India.</p>
+          <p className="mb-2 md:mb-0">© 2026 Heerak Food. All rights reserved.</p>
+          <p>
+  Developed & Managed by{' '}
+  <a 
+    href="https://shreythakkar.dev" 
+    target="_blank" 
+    rel="noopener noreferrer" 
+    className="font-semibold hover:text-white transition-colors border-b border-orange-500/30 hover:border-orange-400 pb-0.5"
+  >
+    Shrey Thakkar
+  </a>
+</p>
         </div>
       </div>
     </footer>

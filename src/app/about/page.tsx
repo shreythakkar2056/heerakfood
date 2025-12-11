@@ -209,18 +209,8 @@ const Footer = () => (
           </div>
         </div>
         <div className="border-t border-orange-500/20 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-orange-100/50 text-center md:text-left">
-          <p className="mb-2 md:mb-0">© 2026 Heerak Food. All rights reserved.</p>
-          <p>
-  Developed & Managed by{' '}
-  <a 
-    href="https://shreythakkar.dev" 
-    target="_blank" 
-    rel="noopener noreferrer" 
-    className="font-semibold hover:text-white transition-colors border-b border-orange-500/30 hover:border-orange-400 pb-0.5"
-  >
-    Shrey Thakkar
-  </a>
-</p>
+          <p className="mb-2 md:mb-0">© 2025 Heerak Food. All rights reserved.</p>
+          <p>Designed with ❤️ in India.</p>
         </div>
       </div>
     </footer>

@@ -24,6 +24,7 @@ const Navbar = () => {
     { name: 'Legacy', href: '/legacy' },
     { name: 'Recipes', href: '/recipes' },
     { name: 'Contact', href: '/contact' },
+       { name: 'Feedback', href: '/contact' },
   ];
 
   return (
@@ -112,7 +113,7 @@ const Footer = () => (
           <div>
             <h4 className="font-bold text-white mb-6 text-lg">Quick Links</h4>
             <ul className="space-y-4 text-orange-100/70">
-              {['Our Story', 'Products', 'Wholesale Inquiry', 'Contact Us'].map((item, idx) => (
+              {['Our Story', 'Products', 'Wholesale Inquiry', 'Contact Us', 'Feedback'].map((item, idx) => (
                  <li key={idx}><a href="#" className="hover:text-orange-400 transition-colors inline-block hover:translate-x-2 duration-300">{item}</a></li>
               ))}
             </ul>
@@ -130,8 +131,18 @@ const Footer = () => (
           </div>
         </div>
         <div className="border-t border-orange-500/20 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-orange-100/50 text-center md:text-left">
-          <p className="mb-2 md:mb-0">© 2025 Heerak Food. All rights reserved.</p>
-          <p>Designed with ❤️ in India.</p>
+          <p className="mb-2 md:mb-0">© 2026 Heerak Food. All rights reserved.</p>
+          <p>
+  Developed & Managed by{' '}
+  <a 
+    href="https://shreythakkar.dev" 
+    target="_blank" 
+    rel="noopener noreferrer" 
+    className="font-semibold hover:text-white transition-colors border-b border-orange-500/30 hover:border-orange-400 pb-0.5"
+  >
+    Shrey Thakkar
+  </a>
+</p>
         </div>
       </div>
     </footer>
@@ -307,10 +318,10 @@ export default function ContactPage() {
                     onSubmit={(e) => handleSubmit(e, 'contacts', generalForm)}
                   >
                     <div className="grid md:grid-cols-2 gap-4">
-                      <InputField label="First Name" name="firstName" placeholder="John" required onChange={(e:any) => handleChange(e, setGeneralForm)} />
-                      <InputField label="Last Name" name="lastName" placeholder="Doe" onChange={(e:any) => handleChange(e, setGeneralForm)} />
+                      <InputField label="First Name" name="firstName" placeholder="Akshar" required onChange={(e:any) => handleChange(e, setGeneralForm)} />
+                      <InputField label="Last Name" name="lastName" placeholder="Patel" onChange={(e:any) => handleChange(e, setGeneralForm)} />
                     </div>
-                    <InputField label="Email Address" name="email" placeholder="john@example.com" type="email" required onChange={(e:any) => handleChange(e, setGeneralForm)} />
+                    <InputField label="Email Address" name="email" placeholder="Akshar@example.com" type="email" required onChange={(e:any) => handleChange(e, setGeneralForm)} />
                     <div className="mb-4">
                       <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Subject</label>
                       <select name="subject" className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-[#4A3B32]" onChange={(e:any) => handleChange(e, setGeneralForm)}>

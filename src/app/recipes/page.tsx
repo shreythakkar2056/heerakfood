@@ -193,6 +193,7 @@ const Navbar = () => {
     { name: 'Legacy', href: '/legacy' },
     { name: 'Recipes', href: '/recipes' },
     { name: 'Contact', href: '/contact' },
+       { name: 'Feedback', href: '/contact' },
   ];
 
   return (
@@ -281,7 +282,7 @@ const Footer = () => (
           <div>
             <h4 className="font-bold text-white mb-6 text-lg">Quick Links</h4>
             <ul className="space-y-4 text-orange-100/70">
-              {['Our Story', 'Products', 'Wholesale Inquiry', 'Contact Us'].map((item, idx) => (
+              {['Our Story', 'Products', 'Wholesale Inquiry', 'Contact Us','Feedback'].map((item, idx) => (
                  <li key={idx}><a href="#" className="hover:text-orange-400 transition-colors inline-block hover:translate-x-2 duration-300">{item}</a></li>
               ))}
             </ul>
@@ -299,8 +300,18 @@ const Footer = () => (
           </div>
         </div>
         <div className="border-t border-orange-500/20 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-orange-100/50 text-center md:text-left">
-          <p className="mb-2 md:mb-0">© 2025 Heerak Food. All rights reserved.</p>
-          <p>Designed with ❤️ in India.</p>
+          <p className="mb-2 md:mb-0">© 2026 Heerak Food. All rights reserved.</p>
+          <p>
+  Developed & Managed by{' '}
+  <a 
+    href="https://shreythakkar.dev" 
+    target="_blank" 
+    rel="noopener noreferrer" 
+    className="font-semibold hover:text-white transition-colors border-b border-orange-500/30 hover:border-orange-400 pb-0.5"
+  >
+    Shrey Thakkar
+  </a>
+</p>
         </div>
       </div>
     </footer>
